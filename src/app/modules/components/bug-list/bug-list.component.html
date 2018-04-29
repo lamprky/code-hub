@@ -3,6 +3,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Title</th>
+      <th scope="col">Description</th>
       <th scope="col">Priority</th>
       <th scope="col">Reporter</th>
       <th scope="col">DateCreated</th>
@@ -11,12 +12,12 @@
   </thead>
   <tbody>
     <tr *ngFor="let bug of bugs;let i = index">
-      <td>{{i}}.</td>
+      <td>{{i + 1}}.</td>
       <td>{{bug.title}}</td>
       <td>{{bug.description}}</td>
       <td>{{bug.priority}}</td>
       <td>{{bug.reporter}}</td>
-      <td>{{bug.createdAt}}</td>
+      <td>{{bug.createdAt | date:'dd/MM/yyyy'}}</td>
       <td>{{bug.status}}</td>
     </tr>
   </tbody>
