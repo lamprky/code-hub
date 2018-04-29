@@ -2,12 +2,12 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">Priority</th>
-      <th scope="col">Reporter</th>
-      <th scope="col">DateCreated</th>
-      <th scope="col">Status</th>
+      <th scope="col" (click)="sortBy('title')">Title</th>
+      <th scope="col" (click)="sortBy('description')">Description</th>
+      <th scope="col" (click)="sortBy('priority')">Priority</th>
+      <th scope="col" (click)="sortBy('reporter')">Reporter</th>
+      <th scope="col" (click)="sortBy('createdAt')">DateCreated</th>
+      <th scope="col" (click)="sortBy('status')">Status</th>
     </tr>
   </thead>
   <tbody>
