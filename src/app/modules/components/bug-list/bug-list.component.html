@@ -2,12 +2,25 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col" (click)="sortBy('title')">Title</th>
-      <th scope="col" (click)="sortBy('description')">Description</th>
-      <th scope="col" (click)="sortBy('priority')">Priority</th>
-      <th scope="col" (click)="sortBy('reporter')">Reporter</th>
-      <th scope="col" (click)="sortBy('createdAt')">DateCreated</th>
-      <th scope="col" (click)="sortBy('status')">Status</th>
+      <th scope="col" (click)="sortBy('title')">
+        Title
+        <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('title'),'fa-angle-down': hasAscOrder('title')}"></i>
+      </th>
+      <th scope="col" (click)="sortBy('description')">Description
+          <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('description'),'fa-angle-down': hasAscOrder('description')}"></i>
+      </th>
+      <th scope="col" (click)="sortBy('priority')">Priority
+          <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('priority'),'fa-angle-down': hasAscOrder('priority')}"></i>
+      </th>
+      <th scope="col" (click)="sortBy('reporter')">Reporter
+          <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('reporter'),'fa-angle-down': hasAscOrder('reporter')}"></i>
+      </th>
+      <th scope="col" (click)="sortBy('createdAt')">DateCreated
+          <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('createdAt'),'fa-angle-down': hasAscOrder('createdAt')}"></i>
+      </th>
+      <th scope="col" (click)="sortBy('status')">Status
+          <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('status'),'fa-angle-down': hasAscOrder('status')}"></i>
+      </th>
     </tr>
   </thead>
   <tbody>

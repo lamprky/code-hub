@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { Bug } from '../../models/bug';
+import { ColumnOrder } from '../../models/column-order';
+import { NgClass} from '@angular/common';
 
 @Component({
   selector: 'br-bug-list',
@@ -9,23 +11,15 @@ import { Bug } from '../../models/bug';
 })
 export class BugListComponent implements OnInit {
   bugs: Bug[];
-  columnsAscOrder;
+  columnsOrder: ColumnOrder[];
 
-  constructor(private dataService: DataService) {
-    this.columnsAscOrder = {
-      'title': false,
-      'description': false,
-      'priority': false,
-      'reporter': false,
-      'status': false,
-      'createdAt': false
-    };
-  }
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
     this.dataService.getBugs().subscribe(
       bugs => {
         this.bugs = bugs;
+        this.setColumnsOrder(this.bugs);
       },
       error => {
         alert('Cannot retrieve data');
@@ -33,10 +27,50 @@ export class BugListComponent implements OnInit {
     );
   }
 
+  private setColumnsOrder(bugs: Bug[]) {
+    if (bugs) {
+      this.columnsOrder = Object.keys(bugs[0]).map(
+        key => <ColumnOrder>{ column: key, isAsc: null }
+      );
+    }
+  }
+
+  private getColumnOrderFor(key): ColumnOrder {
+    return this.columnsOrder && this.columnsOrder.find(colOrder => colOrder.column === key);
+  }
+
+  public hasAscOrder(key): boolean{
+    const columnOrder = this.getColumnOrderFor(key);
+    return columnOrder != null && columnOrder.isAsc === true;
+  }
+
+  public hasDescOrder(key): boolean{
+    const columnOrder = this.getColumnOrderFor(key);
+    return columnOrder != null && columnOrder.isAsc === false;
+  }
+
+  private getOrderByForKey(columnOrder: ColumnOrder, key:string):string{
+    return columnOrder.isAsc === null || columnOrder.isAsc === false
+    ? 'asc'
+    : 'desc';
+  }
+
+  private clearOtherOrders(key){
+      this.columnsOrder.forEach((column) =>{
+          if(column.column !== key){
+            column.isAsc = null;
+          }
+      });
+  }
+
   sortBy(key) {
-    const orderBy = this.columnsAscOrder[key] === true ? 'asc' : 'desc';
-    this.bugs.sort(this.compareValues(key, orderBy));
-    this.columnsAscOrder[key] = !this.columnsAscOrder[key];
+    const columnOrder = this.getColumnOrderFor(key);
+    if (columnOrder) {
+      const orderBy = this.getOrderByForKey(columnOrder, key);
+      this.clearOtherOrders(key);
+      this.bugs.sort(this.compareValues(key, orderBy));
+      columnOrder.isAsc = !columnOrder.isAsc;
+    }
   }
 
   compareValues(key, order = 'asc') {
