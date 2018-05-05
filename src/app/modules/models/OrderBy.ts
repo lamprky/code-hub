@@ -1,4 +1,4 @@
-export interface ColumnOrder {
+export interface OrderBy {
   column: string;
   isAsc: boolean;
 }

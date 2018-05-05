@@ -2,29 +2,28 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col" (click)="sortBy('title')">
-        Title
-        <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('title'),'fa-angle-down': hasAscOrder('title')}"></i>
+      <th scope="col" (click)="sortBy('title')">Title
+        <i [class]="getOrderClass('title')"></i>
       </th>
       <th scope="col" (click)="sortBy('description')">Description
-          <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('description'),'fa-angle-down': hasAscOrder('description')}"></i>
+        <i [class]="getOrderClass('description')"></i>
       </th>
       <th scope="col" (click)="sortBy('priority')">Priority
-          <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('priority'),'fa-angle-down': hasAscOrder('priority')}"></i>
+        <i [class]="getOrderClass('priority') "></i>
       </th>
-      <th scope="col" (click)="sortBy('reporter')">Reporter
-          <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('reporter'),'fa-angle-down': hasAscOrder('reporter')}"></i>
+      <th scope="col " (click)="sortBy('reporter') ">Reporter
+        <i [class]="getOrderClass('reporter') "></i>
       </th>
-      <th scope="col" (click)="sortBy('createdAt')">DateCreated
-          <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('createdAt'),'fa-angle-down': hasAscOrder('createdAt')}"></i>
+      <th scope="col " (click)="sortBy('createdAt') ">Date Created
+        <i [class]="getOrderClass('createdAt') "></i>
       </th>
-      <th scope="col" (click)="sortBy('status')">Status
-          <i class="fa" [ngClass]="{'fa-angle-up': hasDescOrder('status'),'fa-angle-down': hasAscOrder('status')}"></i>
+      <th scope="col " (click)="sortBy('status') ">Status
+        <i [class]="getOrderClass('status') "></i>
       </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let bug of bugs;let i = index">
+    <tr *ngFor="let bug of bugs;let i=index ">
       <td>{{i + 1}}.</td>
       <td>{{bug.title}}</td>
       <td>{{bug.description}}</td>

@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     HttpClientModule
   ],
-  exports:[
+  exports: [
     BugListComponent
   ],
   declarations: [BugListComponent],

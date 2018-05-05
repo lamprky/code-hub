@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { Bug } from '../../models/bug';
-import { ColumnOrder } from '../../models/column-order';
-import { NgClass} from '@angular/common';
+import { OrderBy } from '../../models/orderBy';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'br-bug-list',
@@ -11,15 +11,13 @@ import { NgClass} from '@angular/common';
 })
 export class BugListComponent implements OnInit {
   bugs: Bug[];
-  columnsOrder: ColumnOrder[];
-
+  orderBy: OrderBy = { isAsc: true, column: '' };
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
     this.dataService.getBugs().subscribe(
       bugs => {
         this.bugs = bugs;
-        this.setColumnsOrder(this.bugs);
       },
       error => {
         alert('Cannot retrieve data');
@@ -27,53 +25,24 @@ export class BugListComponent implements OnInit {
     );
   }
 
-  private setColumnsOrder(bugs: Bug[]) {
-    if (bugs) {
-      this.columnsOrder = Object.keys(bugs[0]).map(
-        key => <ColumnOrder>{ column: key, isAsc: null }
-      );
+  public getOrderClass(key: string): string {
+    return (this.orderBy.column === key) ? (this.orderBy.isAsc ? 'fa fa-angle-down' : 'fa fa-angle-up') : '';
+  }
+
+  sortBy(key: string) {
+    if (this.orderBy.column === key) {
+      this.orderBy.isAsc = !this.orderBy.isAsc;
+    } else {
+      this.orderBy = { isAsc: true, column: key };
     }
+
+    this.bugs.sort(this.compareValues(this.orderBy));
   }
 
-  private getColumnOrderFor(key): ColumnOrder {
-    return this.columnsOrder && this.columnsOrder.find(colOrder => colOrder.column === key);
-  }
+  compareValues(orderBy: OrderBy) {
+    const key = orderBy.column;
+    const isAsc = orderBy.isAsc;
 
-  public hasAscOrder(key): boolean{
-    const columnOrder = this.getColumnOrderFor(key);
-    return columnOrder != null && columnOrder.isAsc === true;
-  }
-
-  public hasDescOrder(key): boolean{
-    const columnOrder = this.getColumnOrderFor(key);
-    return columnOrder != null && columnOrder.isAsc === false;
-  }
-
-  private getOrderByForKey(columnOrder: ColumnOrder, key:string):string{
-    return columnOrder.isAsc === null || columnOrder.isAsc === false
-    ? 'asc'
-    : 'desc';
-  }
-
-  private clearOtherOrders(key){
-      this.columnsOrder.forEach((column) =>{
-          if(column.column !== key){
-            column.isAsc = null;
-          }
-      });
-  }
-
-  sortBy(key) {
-    const columnOrder = this.getColumnOrderFor(key);
-    if (columnOrder) {
-      const orderBy = this.getOrderByForKey(columnOrder, key);
-      this.clearOtherOrders(key);
-      this.bugs.sort(this.compareValues(key, orderBy));
-      columnOrder.isAsc = !columnOrder.isAsc;
-    }
-  }
-
-  compareValues(key, order = 'asc') {
     return function(a, b) {
       if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
         // property doesn't exist on either object
@@ -89,7 +58,7 @@ export class BugListComponent implements OnInit {
       } else if (varA < varB) {
         comparison = -1;
       }
-      return order === 'desc' ? comparison * -1 : comparison;
+      return isAsc === false ? comparison * -1 : comparison;
     };
   }
 }
