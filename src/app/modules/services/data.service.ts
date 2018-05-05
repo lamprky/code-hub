@@ -11,4 +11,8 @@ export class DataService {
   getBugs(): Observable<Array<Bug>> {
     return this.httpClient.get<Bug[]>(environment.endpoint + '/bugs');
   }
+
+  postBug(bug: Bug): Observable<Bug> {
+    return this.httpClient.post<Bug>(environment.endpoint + '/bugs', bug);
+  }
 }

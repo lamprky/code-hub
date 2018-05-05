@@ -3,7 +3,7 @@ import { DataService } from '../../services/data.service';
 import { Bug } from '../../models/bug';
 import { OrderBy } from '../../models/orderBy';
 import { NgClass } from '@angular/common';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'br-bug-list',
   templateUrl: './bug-list.component.html',
@@ -12,7 +12,7 @@ import { NgClass } from '@angular/common';
 export class BugListComponent implements OnInit {
   bugs: Bug[];
   orderBy: OrderBy = { isAsc: true, column: '' };
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit() {
     this.dataService.getBugs().subscribe(
@@ -60,5 +60,9 @@ export class BugListComponent implements OnInit {
       }
       return isAsc === false ? comparison * -1 : comparison;
     };
+  }
+
+  gotoAddNew() {
+    this.router.navigate(['addbug']);
   }
 }
