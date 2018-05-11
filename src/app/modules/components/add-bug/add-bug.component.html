@@ -1,10 +1,11 @@
+{{form.value | json}}
 <form #form="ngForm" class="form" (ngSubmit)="onSubmit()" [class.was-validated]="form.invalid && form.dirty">
 
-  <div [ngClass]="{'has-error': title.invalid && title.dirty}">
+  <div>
 
     <div class="form-group">
       <label class="form-control-label">Title</label>
-      <input #title="ngModel" class="form-control" type="text" name="title" [ngModel]="bug.title" required>
+      <input #title="ngModel" class="form-control" type="text" name="title" [(ngModel)]="bug.title" required>
       <div *ngIf="title.invalid && title.dirty" class="invalid-feedback">
         Field is required
       </div>
@@ -12,36 +13,36 @@
 
     <div class="form-group">
       <label class="form-control-label">Description</label>
-      <textarea #description="ngModel" class="form-control" type="text" name="description" [ngModel]="bug.description" required></textarea>
+      <textarea #description="ngModel" class="form-control" type="text" name="description" [(ngModel)]="bug.description" required></textarea>
       <div *ngIf="description.invalid && description.dirty" class="invalid-feedback">
         Field is required
       </div>
     </div>
 
-    <div class="form-group" [ngClass]="{'has-error': !priorityIsValid && priority.dirty}">
+    <div class="form-group" [ngClass]="{'has-error': priority.invalid && priority.dirty}">
       <label class="form-control-label">Priority</label>
       <br/>
       <select #priority="ngModel" name="priority" [(ngModel)]="bug.priority" required>
         <option [ngValue]="null">Select</option>
-        <option *ngFor="let priority of prioritiesOptions">
+        <option *ngFor="let priority of prioritiesOptions" [ngValue]="priority.key">
           {{priority.value}}
         </option>
       </select>
-      <div *ngIf="!priorityIsValid && priority.dirty" style="color:red">
+      <div *ngIf="priority.invalid && priority.dirty" style="color:red">
         Field is required
       </div>
     </div>
 
-    <div class="form-group" [ngClass]="{'has-error': !reporterIsValid && reporter.dirty}">
+    <div class="form-group" [ngClass]="{'has-error': reporter.invalid && reporter.dirty}">
       <label class="form-control-label">Reporter</label>
       <br/>
       <select #reporter="ngModel" name="reporter" [(ngModel)]="bug.reporter" required>
         <option [ngValue]="null">Select</option>
-        <option *ngFor="let reporter of reporterOptions">
+        <option *ngFor="let reporter of reporterOptions" [ngValue]="reporter.key">
           {{reporter.value}}
         </option>
       </select>
-      <div *ngIf="!reporterIsValid && reporter.dirty" style="color:red">
+      <div *ngIf="reporter.invalid && reporter.dirty" style="color:red">
         Field is required
       </div>
     </div>
