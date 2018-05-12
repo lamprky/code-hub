@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../services/data.service';
-import { Bug } from '../../models/bug';
-import { OrderBy } from '../../models/orderBy';
+import { DataService } from '../services/data.service';
+import { Bug } from '../models/bug';
+import { OrderBy } from '../models/orderBy';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'br-bug-list',
   templateUrl: './bug-list.component.html',

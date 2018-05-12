@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Bug } from '../../models/bug';
-import { BugListComponent } from '../bug-list/bug-list.component';
 import { SelectOption } from '../../models/selectOption.model';
 import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
 import { FormOptionsService } from '../../services/form-options.service';
 
 @Component({
-  selector: 'br-add-bug',
-  templateUrl: './add-bug.component.html',
-  styleUrls: ['./add-bug.component.scss']
+  selector: 'br-add-bug-template',
+  templateUrl: './add-bug-template.component.html',
+  styleUrls: ['./add-bug-template.component.scss']
 })
-export class AddBugComponent implements OnInit {
+export class AddBugTemplateComponent implements OnInit {
   bug: Bug;
   prioritiesOptions: SelectOption[];
   reporterOptions: SelectOption[];

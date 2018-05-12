@@ -1,23 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
-import { BugListModule } from './modules/bug-list.module';
+import { BugListModule } from './modules/bug-list/bug-list.module';
 import { RouterModule, Routes } from '@angular/router';
 import { routes } from './router';
-import { AddBugComponent } from './modules/components/add-bug/add-bug.component';
+import { CoreModule } from './core/core.module';
+import { AddBugFormsModule } from './modules/add-bug-forms/add-bug-forms.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AddBugComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
+    CoreModule,
     BugListModule,
-    FormsModule,
+    AddBugFormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
