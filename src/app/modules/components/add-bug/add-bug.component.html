@@ -1,7 +1,6 @@
-{{form.value | json}}
-<form #form="ngForm" class="form" (ngSubmit)="onSubmit()" [class.was-validated]="form.invalid && form.dirty">
-
-  <div>
+<!-- {{form.value | json}} -->
+<div class="container">
+  <form #form="ngForm" class="form" (ngSubmit)="onSubmit()" [class.was-validated]="form.invalid && form.dirty">
 
     <div class="form-group">
       <label class="form-control-label">Title</label>
@@ -13,7 +12,9 @@
 
     <div class="form-group">
       <label class="form-control-label">Description</label>
-      <textarea #description="ngModel" class="form-control" type="text" name="description" [(ngModel)]="bug.description" required></textarea>
+      <textarea #description="ngModel" class="form-control" type="text" name="description" [(ngModel)]="bug.description" required>
+
+      </textarea>
       <div *ngIf="description.invalid && description.dirty" class="invalid-feedback">
         Field is required
       </div>
@@ -22,7 +23,7 @@
     <div class="form-group" [ngClass]="{'has-error': priority.invalid && priority.dirty}">
       <label class="form-control-label">Priority</label>
       <br/>
-      <select #priority="ngModel" name="priority" [(ngModel)]="bug.priority" required>
+      <select #priority="ngModel" class="form-control" name="priority" [(ngModel)]="bug.priority" required>
         <option [ngValue]="null">Select</option>
         <option *ngFor="let priority of prioritiesOptions" [ngValue]="priority.key">
           {{priority.value}}
@@ -36,7 +37,7 @@
     <div class="form-group" [ngClass]="{'has-error': reporter.invalid && reporter.dirty}">
       <label class="form-control-label">Reporter</label>
       <br/>
-      <select #reporter="ngModel" name="reporter" [(ngModel)]="bug.reporter" required>
+      <select #reporter="ngModel" class="form-control" name="reporter" [(ngModel)]="bug.reporter" required>
         <option [ngValue]="null">Select</option>
         <option *ngFor="let reporter of reporterOptions" [ngValue]="reporter.key">
           {{reporter.value}}
@@ -52,13 +53,12 @@
       <br/>
       <div class="form-check" *ngFor="let status of statusOptions">
         <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="status" id="{{status.key}}" value="{{status.key}}" [(ngModel)]="bug.status">{{status.value}}
+          <input type="radio" class="form-check-input" name="status" id="{{status.key}}" value="{{status.key}}" [(ngModel)]="bug.status"
+            required="isStatusReq()">{{status.value}}
         </label>
       </div>
     </div>
 
-  </div>
-
-  <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
-
-</form>
+    <button class="btn btn-primary btn-block" type="submit" [disabled]="!form.valid">Submit</button>
+  </form>
+</div>

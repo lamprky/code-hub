@@ -1,37 +1,39 @@
-<button class="btn btn-primary" (click)="gotoAddNew()">Add Bug</button>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col" (click)="sortBy('title')">Title
-        <i [class]="getOrderClass('title')"></i>
-      </th>
-      <th scope="col" (click)="sortBy('description')">Description
-        <i [class]="getOrderClass('description')"></i>
-      </th>
-      <th scope="col" (click)="sortBy('priority')">Priority
-        <i [class]="getOrderClass('priority') "></i>
-      </th>
-      <th scope="col " (click)="sortBy('reporter') ">Reporter
-        <i [class]="getOrderClass('reporter') "></i>
-      </th>
-      <th scope="col " (click)="sortBy('createdAt') ">Date Created
-        <i [class]="getOrderClass('createdAt') "></i>
-      </th>
-      <th scope="col " (click)="sortBy('status') ">Status
-        <i [class]="getOrderClass('status') "></i>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let bug of bugs;let i=index ">
-      <td>{{i + 1}}.</td>
-      <td>{{bug.title}}</td>
-      <td>{{bug.description}}</td>
-      <td>{{bug.priority}}</td>
-      <td>{{bug.reporter}}</td>
-      <td>{{bug.createdAt | date:'dd/MM/yyyy'}}</td>
-      <td>{{bug.status}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container">
+  <a class="btn btn-primary" [routerLink]="['addbug']">Add Bug</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" (click)="sortBy('title')">Title
+          <i [class]="getOrderClass('title')"></i>
+        </th>
+        <th scope="col" (click)="sortBy('description')">Description
+          <i [class]="getOrderClass('description')"></i>
+        </th>
+        <th scope="col" (click)="sortBy('priority')">Priority
+          <i [class]="getOrderClass('priority') "></i>
+        </th>
+        <th scope="col " (click)="sortBy('reporter') ">Reporter
+          <i [class]="getOrderClass('reporter') "></i>
+        </th>
+        <th scope="col " (click)="sortBy('createdAt') ">Date Created
+          <i [class]="getOrderClass('createdAt') "></i>
+        </th>
+        <th scope="col " (click)="sortBy('status') ">Status
+          <i [class]="getOrderClass('status') "></i>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bug of bugs;let i=index ">
+        <td>{{i + 1}}.</td>
+        <td>{{bug.title}}</td>
+        <td>{{bug.description}}</td>
+        <td>{{bug.priority}}</td>
+        <td>{{bug.reporter}}</td>
+        <td>{{bug.createdAt | date:'dd/MM/yyyy'}}</td>
+        <td>{{bug.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

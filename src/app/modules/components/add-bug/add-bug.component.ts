@@ -37,6 +37,10 @@ export class AddBugComponent implements OnInit {
     this.statusOptions.push({ value: 'Rejected', key: 3 });
   }
 
+  isStatusReq(): boolean {
+    if (this.bug.reporter === '1') { return true; }
+    else { return false; }
+  }
   onSubmit() {
     this.dataService.postBug(this.bug).subscribe(value => {
       this.router.navigate(['']);
