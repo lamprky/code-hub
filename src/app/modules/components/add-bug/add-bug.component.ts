@@ -4,6 +4,7 @@ import { BugListComponent } from '../bug-list/bug-list.component';
 import { SelectOption } from '../../models/selectOption.model';
 import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
+import { FormOptionsService } from '../../services/form-options.service';
 
 @Component({
   selector: 'br-add-bug',
@@ -16,30 +17,23 @@ export class AddBugComponent implements OnInit {
   reporterOptions: SelectOption[];
   statusOptions: SelectOption[];
 
-  constructor(private dataService: DataService, private router: Router) {
+  constructor(private dataService: DataService, private formOptionsService: FormOptionsService, private router: Router) {
     this.bug = <Bug>{};
-    this.prioritiesOptions = new Array<SelectOption>();
-    this.reporterOptions = new Array<SelectOption>();
-    this.statusOptions = new Array<SelectOption>();
+
+    this.prioritiesOptions = this.formOptionsService.getPrioritiesOptions();
+    this.reporterOptions = this.formOptionsService.getReporterOptions();
+    this.statusOptions = this.formOptionsService.getStatusOptions();
   }
 
   ngOnInit() {
-    this.prioritiesOptions.push({ value: 'Minor', key: 1 });
-    this.prioritiesOptions.push({ value: 'Major', key: 2 });
-    this.prioritiesOptions.push({ value: 'Critical', key: 3 });
-
-    this.reporterOptions.push({ value: 'QA', key: 1 });
-    this.reporterOptions.push({ value: 'PO', key: 2 });
-    this.reporterOptions.push({ value: 'DEV', key: 3 });
-
-    this.statusOptions.push({ value: 'Ready for test', key: 1 });
-    this.statusOptions.push({ value: 'Done', key: 2 });
-    this.statusOptions.push({ value: 'Rejected', key: 3 });
   }
 
   isStatusReq(): boolean {
-    if (this.bug.reporter === '1') { return true; }
-    else { return false; }
+    if (this.bug.reporter === '1') {
+      return true;
+    } else {
+      return false;
+    }
   }
   onSubmit() {
     this.dataService.postBug(this.bug).subscribe(value => {
