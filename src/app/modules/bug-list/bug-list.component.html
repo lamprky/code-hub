@@ -1,6 +1,8 @@
 <div class="container">
-  <a class="btn btn-primary" [routerLink]="['/addBugTemplate']">Add Bug</a>
+  <a class="btn btn-primary" [routerLink]="['/addBugTemplate']">Add Bug Template</a>
   <a class="btn btn-primary" [routerLink]="['/addBugReactive']">Add Bug Reactive</a>
+  <a class="btn btn-primary" [routerLink]="['/bug']">Add Bug</a>
+
   <table class="table">
     <thead>
       <tr>
@@ -23,6 +25,8 @@
         <th scope="col " (click)="sortBy('status') ">Status
           <i [class]="getOrderClass('status') "></i>
         </th>
+        <th scope="col " (click)="sortBy('status') ">Action
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -34,6 +38,7 @@
         <td>{{bug.reporter}}</td>
         <td>{{bug.createdAt | date:'dd/MM/yyyy'}}</td>
         <td>{{bug.status}}</td>
+        <td><button class="btn btn-primary" [routerLink]="['/bug', bug.id]">Edit</button></td>
       </tr>
     </tbody>
   </table>
