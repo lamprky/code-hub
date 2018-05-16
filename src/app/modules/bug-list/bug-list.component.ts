@@ -4,6 +4,7 @@ import { Bug } from '../models/bug';
 import { OrderBy } from '../models/orderBy';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormOptionsService } from '../services/form-options.service';
 
 @Component({
   selector: 'br-bug-list',
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 export class BugListComponent implements OnInit {
   bugs: Bug[];
   orderBy: OrderBy = { isAsc: true, column: '' };
-  constructor(private dataService: DataService, private router: Router) {}
+  constructor(private dataService: DataService, public formOptionsService: FormOptionsService, private router: Router) {}
 
   ngOnInit() {
     this.dataService.getBugs().subscribe(

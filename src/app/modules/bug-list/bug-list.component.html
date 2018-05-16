@@ -23,6 +23,7 @@
         <th scope="col " (click)="sortBy('status') ">Status
           <i [class]="getOrderClass('status') "></i>
         </th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -30,10 +31,14 @@
         <td>{{i + 1}}.</td>
         <td>{{bug.title}}</td>
         <td>{{bug.description}}</td>
-        <td>{{bug.priority}}</td>
-        <td>{{bug.reporter}}</td>
+        <td>{{bug.priority | keyValueMap: formOptionsService.getPrioritiesOptions()}}</td>
+        <td>{{bug.reporter | keyValueMap: formOptionsService.getReporterOptions()}}</td>
         <td>{{bug.createdAt | date:'dd/MM/yyyy'}}</td>
-        <td>{{bug.status}}</td>
+        <td>{{bug.status | keyValueMap: formOptionsService.getStatusOptions()}}</td>
+        <td>
+            <button type="button" class="btn" click="">Edit</button>
+            <button type="button" class="btn">Add Comment</button>
+        </td>
       </tr>
     </tbody>
   </table>
