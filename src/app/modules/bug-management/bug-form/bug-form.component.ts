@@ -38,7 +38,10 @@ export class BugFormComponent implements OnChanges {
       title: new FormControl(this.bug.title, Validators.required),
       description: new FormControl(this.bug.description, Validators.required),
       priority: new FormControl(this.bug.priority, Validators.required),
-      reporter: new FormControl((this.bug.reporter !== undefined) ? +this.bug.reporter : null, Validators.required),
+      reporter: new FormControl(
+        this.bug.reporter !== undefined ? +this.bug.reporter : null,
+        Validators.required
+      ),
       status: new FormControl(this.bug.status)
     });
 
@@ -69,6 +72,15 @@ export class BugFormComponent implements OnChanges {
       return false;
     }
   }
+
+  getTitle() {
+    if (this.isNew()) {
+      return 'New';
+    } else {
+      return 'Edit';
+    }
+  }
+
   onSubmit() {
     Object.keys(this.form.value).map(key => {
       this.bug[key] = this.form.value[key];

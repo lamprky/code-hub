@@ -1,11 +1,12 @@
 <!-- {{form.value | json}} -->
+
 <div class="container">
+  <h3>{{getTitle()}} Bug</h3>
   <form [formGroup]="form" class="form" (ngSubmit)="onSubmit()" [class.was-validated]="form.invalid && form.dirty">
 
     <div class="form-group">
       <label class="form-control-label">Title</label>
-      <input formControlName="title" class="form-control"
-              type="text" name="title" [attr.disabled]="isUpdateNotQa() ? '' : null">
+      <input formControlName="title" class="form-control" type="text" name="title" [attr.disabled]="isUpdateNotQa() ? '' : null">
       <div *ngIf="form.controls['title'].errors?.required" class="invalid-feedback">
         Field is required
       </div>
@@ -13,8 +14,7 @@
 
     <div class="form-group">
       <label class="form-control-label">Description</label>
-      <textarea formControlName="description" class="form-control"
-                type="text" name="description" [attr.disabled]="isUpdateNotQa() ? '' : null">
+      <textarea formControlName="description" class="form-control" type="text" name="description" [attr.disabled]="isUpdateNotQa() ? '' : null">
       </textarea>
       <div *ngIf="form.controls['description'].errors?.required" class="invalid-feedback">
         Field is required
@@ -24,8 +24,7 @@
     <div class="form-group">
       <label class="form-control-label">Priority</label>
       <br/>
-      <select formControlName="priority" class="form-control"
-              name="priority"[attr.disabled]="isUpdateNotQa() ? '' : null">
+      <select formControlName="priority" class="form-control" name="priority" [attr.disabled]="isUpdateNotQa() ? '' : null">
         <option [ngValue]="null">Select</option>
         <option *ngFor="let priority of prioritiesOptions" [ngValue]="priority.key">
           {{priority.value}}
@@ -39,8 +38,7 @@
     <div class="form-group">
       <label class="form-control-label">Reporter</label>
       <br/>
-      <select formControlName="reporter" class="form-control"
-              name="reporter"[attr.disabled]="isUpdateNotQa() ? '' : null">
+      <select formControlName="reporter" class="form-control" name="reporter" [attr.disabled]="isUpdateNotQa() ? '' : null">
         <option [ngValue]="null">Select</option>
         <option *ngFor="let reporter of reporterOptions" [ngValue]="reporter.key">
           {{reporter.value}}
@@ -56,9 +54,8 @@
       <br/>
       <div class="form-check" *ngFor="let status of statusOptions">
         <label class="form-check-label">
-          <input formControlName="status" type="radio" class="form-check-input"
-                  name="status" id="{{status.key}}" value="{{status.key}}" [attr.disabled]="isUpdateNotQa() ? '' : null">
-              {{status.value}}
+          <input formControlName="status" type="radio" class="form-check-input" name="status" id="{{status.key}}" value="{{status.key}}"
+            [attr.disabled]="isUpdateNotQa() ? '' : null"> {{status.value}}
         </label>
       </div>
       <div *ngIf="form.controls['status'].errors?.required" style="color:red">
@@ -66,8 +63,7 @@
       </div>
     </div>
 
-    <button class="btn btn-primary btn-block" type="submit"
-            [disabled]="!form.valid" *ngIf="!isUpdateNotQa()">Submit</button>
+    <button class="btn btn-primary btn-block" type="submit" [disabled]="!form.valid" *ngIf="!isUpdateNotQa()">Submit</button>
   </form>
   <br/>
   <br-comment *ngIf="!isNew()"></br-comment>
