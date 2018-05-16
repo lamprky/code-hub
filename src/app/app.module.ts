@@ -7,17 +7,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { routes } from './router';
 import { CoreModule } from './core/core.module';
 import { AddBugFormsModule } from './modules/add-bug-forms/add-bug-forms.module';
+import { BugManagementComponent } from './modules/bug-management/bug-management.component';
+import { BugFormComponent } from './modules/bug-management/bug-form/bug-form.component';
+import { BugManagementModule } from './modules/bug-management/bug-management.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     CoreModule,
     BugListModule,
     AddBugFormsModule,
+    BugManagementModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],

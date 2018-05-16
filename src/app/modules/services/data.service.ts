@@ -12,7 +12,15 @@ export class DataService {
     return this.httpClient.get<Bug[]>(environment.endpoint + '/bugs');
   }
 
+  getBug(id: string): Observable<Bug> {
+    return this.httpClient.get<Bug>(environment.endpoint + '/bugs/' + id);
+  }
+
   postBug(bug: Bug): Observable<Bug> {
     return this.httpClient.post<Bug>(environment.endpoint + '/bugs', bug);
+  }
+
+  putBug(bug: Bug): Observable<Bug> {
+    return this.httpClient.put<Bug>(environment.endpoint + '/bugs/' + bug.id, bug);
   }
 }
