@@ -62,6 +62,13 @@ export class BugFormComponent implements OnChanges {
     }
   }
 
+  isNew() {
+    if (this.bug.title === undefined) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   onSubmit() {
     Object.keys(this.form.value).map(key => {
       this.bug[key] = this.form.value[key];
