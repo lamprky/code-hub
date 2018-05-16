@@ -10,10 +10,13 @@ import { Bug } from '../models/bug';
   styleUrls: ['./bug-management.component.scss']
 })
 export class BugManagementComponent implements OnInit {
-
   id: string;
   bug: Bug;
-  constructor(private dataService: DataService, private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.id = this.route.snapshot.params['id'];
     this.bug = <Bug>{};
 
@@ -29,13 +32,17 @@ export class BugManagementComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   onSubmit(bug: Bug) {
-    this.dataService.postBug(bug).subscribe(value => {
-      this.router.navigate(['']);
-    });
+    if (bug.id) {
+      this.dataService.putBug(bug).subscribe(value => {
+        this.router.navigate(['']);
+      });
+    } else {
+      this.dataService.postBug(bug).subscribe(value => {
+        this.router.navigate(['']);
+      });
+    }
   }
 }

@@ -1,6 +1,4 @@
-{{bug | json}}
-{{bug.title}}
-
+<!-- {{form.value | json}} -->
 <div class="container">
   <form [formGroup]="form" class="form" (ngSubmit)="onSubmit()" [class.was-validated]="form.invalid && form.dirty">
 
@@ -15,7 +13,6 @@
     <div class="form-group">
       <label class="form-control-label">Description</label>
       <textarea formControlName="description" class="form-control" type="text" name="description">
-
       </textarea>
       <div *ngIf="form.controls['description'].errors?.required" class="invalid-feedback">
         Field is required
@@ -65,4 +62,5 @@
 
     <button class="btn btn-primary btn-block" type="submit" [disabled]="!form.valid">Submit</button>
   </form>
+  <br-comment></br-comment>
 </div>
