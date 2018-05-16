@@ -52,8 +52,10 @@ export class BugFormComponent implements OnChanges {
     });
   }
 
-  isUpdate() {
+  isUpdateNotQa() {
     if (this.bug.title === undefined) {
+      return false;
+    } else if (+this.bug.reporter === 1) {
       return false;
     } else {
       return true;
