@@ -39,9 +39,6 @@ export class BugFormComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    // this.addMainFormGroup();
-    // this.addCommentFormGroup();
-
     this.form = new FormGroup({
       title: new FormControl(this.bug.title, Validators.required),
       description: new FormControl(this.bug.description, Validators.required),
@@ -61,35 +58,6 @@ export class BugFormComponent implements OnChanges {
       }
       this.form.controls.status.updateValueAndValidity();
     });
-  }
-
-  private addMainFormGroup() {
-    const enableValidators = this.isUpdateNotQa();
-
-    this.form = new FormGroup({
-      title: this.createFormControl(this.bug.title, [Validators.required], enableValidators),
-      description: this.createFormControl(this.bug.description, [Validators.required], enableValidators),
-      priority: this.createFormControl(this.bug.priority, [Validators.required], enableValidators),
-      reporter: this.createFormControl(
-        this.bug.reporter !== undefined ? +this.bug.reporter : null,
-        [Validators.required], enableValidators
-      ),
-      status: this.createFormControl(this.bug.status, [], false)
-    });
-  }
-
-  private addCommentFormGroup() {
-    if (this.canAddComment()) {
-      if (this.form) {
-        this.form.addControl(
-          'comment',
-          new FormGroup({
-            reporter: new FormControl(null, Validators.required),
-            description: new FormControl('', Validators.required)
-          })
-        );
-      }
-    }
   }
 
   // TODO: If we keep this logic, transfer this to a service in shared. If so check if it will be singleton
