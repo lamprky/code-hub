@@ -63,8 +63,8 @@
       </div>
     </div>
 
-    <button class="btn btn-primary btn-block" type="submit" [disabled]="!form.valid" *ngIf="!isUpdateNotQa()">Submit</button>
+    <br-comment [parentFormGroup]="form" *ngIf="canAddComment()"></br-comment>
+
+    <button class="btn btn-primary btn-block" type="submit" [disabled]="!canSubmitForm(form)" >Submit</button>
   </form>
-  <br/>
-  <br-comment *ngIf="!isNew()"></br-comment>
 </div>

@@ -8,9 +8,7 @@ import { CommentComponent } from './bug-form/comment/comment.component';
 
 const routes: Routes = [
   {path: 'bug', component: BugManagementComponent},
-  {path: 'bug/:id', component: BugManagementComponent},
-  {path: 'bug/:id', component: CommentComponent},
-
+  {path: 'bug/:id', component: BugManagementComponent}
 ];
 
 @NgModule({
