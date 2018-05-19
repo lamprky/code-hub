@@ -15,12 +15,7 @@ import { IComment } from '../models/comment';
 export class BugListComponent implements OnInit {
   bugs: Bug[];
   orderBy: OrderBy = { isAsc: true, column: '' };
-  id: string;
-  comments: any[];
-  commentReporter: any[];
-  commentDescription: any[];
-  getBug: Bug;
-  isVisible: boolean;
+  displayCommentList: boolean[];
 
   constructor(
     private dataService: DataService,
@@ -32,6 +27,7 @@ export class BugListComponent implements OnInit {
     this.dataService.getBugs().subscribe(
       bugs => {
         this.bugs = bugs;
+        this.displayCommentList = new Array<boolean>(this.bugs.length);
       },
       error => {
         alert('Cannot retrieve data');
@@ -84,4 +80,7 @@ export class BugListComponent implements OnInit {
     this.router.navigate(['addbug']);
   }
 
+  toggleDisplay(index){
+    this.displayCommentList[index] = !this.displayCommentList[index];
+  }
 }

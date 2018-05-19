@@ -42,12 +42,12 @@
           <td>{{bug.createdAt | date:'dd/MM/yyyy'}}</td>
           <td>{{bug.status | keyValueMap: formOptionsService.getStatusOptions()}}</td>
           <td>
-              <button class="btn btn-primary fa fa-pencil" [routerLink]="['/bug', bug.id]" style="font: normal normal normal 17px/1.5 FontAwesome !important;"></button>
-              <button class="btn btn-success fa fa-comment" style="font: normal normal normal 17px/1.5 FontAwesome !important;" [disabled]="bug.comments.length == 0" (click)="bug.displayComment = !bug.displayComment"></button>
+              <button class="btn btn-primary fa fa-pencil" [routerLink]="['/bug', bug.id]"></button>
+              <button class="btn btn-success fa fa-comment" [disabled]="bug.comments.length == 0" (click)="toggleDisplay(i)"></button>
           </td>
         </tr>
 
-        <tr *ngIf="bug.displayComment">
+        <tr *ngIf="displayCommentList[i]">
           <td colspan="8">
             <table style="width: 97%;border: 2px solid lightgray">
               <thead style=" line-height: 0.5; background-color: lightgray ">
