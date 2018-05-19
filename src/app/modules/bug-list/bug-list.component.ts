@@ -5,6 +5,7 @@ import { OrderBy } from '../models/orderBy';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormOptionsService } from '../services/form-options.service';
+import { IComment } from '../models/comment';
 
 @Component({
   selector: 'br-bug-list',
@@ -14,7 +15,18 @@ import { FormOptionsService } from '../services/form-options.service';
 export class BugListComponent implements OnInit {
   bugs: Bug[];
   orderBy: OrderBy = { isAsc: true, column: '' };
-  constructor(private dataService: DataService, public formOptionsService: FormOptionsService, private router: Router) {}
+  id: string;
+  comments: any[];
+  commentReporter: any[];
+  commentDescription: any[];
+  getBug: Bug;
+  isVisible: boolean;
+
+  constructor(
+    private dataService: DataService,
+    public formOptionsService: FormOptionsService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.dataService.getBugs().subscribe(
@@ -28,7 +40,11 @@ export class BugListComponent implements OnInit {
   }
 
   public getOrderClass(key: string): string {
-    return (this.orderBy.column === key) ? (this.orderBy.isAsc ? 'fa fa-angle-down' : 'fa fa-angle-up') : '';
+    return this.orderBy.column === key
+      ? this.orderBy.isAsc
+        ? 'fa fa-angle-down'
+        : 'fa fa-angle-up'
+      : '';
   }
 
   sortBy(key: string) {
@@ -67,4 +83,5 @@ export class BugListComponent implements OnInit {
   gotoAddNew() {
     this.router.navigate(['addbug']);
   }
+
 }
