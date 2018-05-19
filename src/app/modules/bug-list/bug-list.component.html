@@ -42,7 +42,7 @@
           <td>{{bug.createdAt | date:'dd/MM/yyyy'}}</td>
           <td>{{bug.status | keyValueMap: formOptionsService.getStatusOptions()}}</td>
           <td>
-              <i class="fa fa-pencil fa-15x" [routerLink]="['/bug', bug.id]" style="width:3px;"></i>
+              <button class="btn btn-primary fa fa-pencil" [routerLink]="['/bug', bug.id]" style="font: normal normal normal 17px/1.5 FontAwesome !important;"></button>
               <button class="btn btn-success fa fa-comment" style="font: normal normal normal 17px/1.5 FontAwesome !important;" [disabled]="bug.comments.length == 0" (click)="bug.displayComment = !bug.displayComment"></button>
           </td>
         </tr>
@@ -72,7 +72,6 @@
 
 
   <div style="margin-bottom: 50px">
-    <!-- <span style="font-weight: bold">Comments for: {{getBug.title}}</span> -->
   </div>
 
 
