@@ -52,7 +52,7 @@ export class BugFormComponent implements OnChanges {
       this.form.controls.description.setValue(this.bug.description);
       this.form.controls.priority.setValue(this.bug.priority);
       this.form.controls.reporter.setValue(+this.bug.reporter);
-      this.form.controls.status.setValue(+this.bug.status);
+      this.form.controls.status.setValue(this.bug.status);
     }
 
     this.form.controls.reporter.valueChanges.subscribe((value: number) => {

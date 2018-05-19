@@ -13,7 +13,6 @@ export class BugManagementComponent implements OnInit {
   id: string;
   bug: Bug;
 
-  // TODO: it is better to retrieve data in onInit. Constructor is only for variables initialization
   constructor(
     private dataService: DataService,
     private router: Router,
