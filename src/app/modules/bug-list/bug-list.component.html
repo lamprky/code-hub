@@ -39,7 +39,7 @@
         <td>{{bug.reporter | keyValueMap: formOptionsService.getReporterOptions()}}</td>
         <td>{{bug.createdAt | date:'dd/MM/yyyy'}}</td>
         <td>{{bug.status | keyValueMap: formOptionsService.getStatusOptions()}}</td>
-        <td><button class="btn btn-primary" [routerLink]="['/bug', bug.id]">Edit</button></td>
+        <td><i class="fa fa-pencil fa-15x" [routerLink]="['/bug', bug.id]" style="width:3px;"></i></td>
       </tr>
     </tbody>
   </table>
