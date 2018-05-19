@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormOptionsService } from '../services/form-options.service';
 import { CoreModule } from '../../core/core.module';
 import { KeyValueMapPipe } from '../pipes/key-value-map.pipe';
+import { SharedModule } from '../../shared/shared.module';
 
 const routes: Routes = [
   {path: 'bug-list', component: BugListComponent}
@@ -15,6 +16,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ],
   exports: [

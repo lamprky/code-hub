@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   imports: [
@@ -8,11 +9,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     FormsModule
   ],
-  declarations: [],
+  declarations: [PaginationComponent],
   exports: [
     ReactiveFormsModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    PaginationComponent
   ]
 })
 export class SharedModule { }

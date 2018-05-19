@@ -16,23 +16,25 @@ export class BugListComponent implements OnInit {
   bugs: Bug[];
   orderBy: OrderBy = { isAsc: true, column: '' };
   displayCommentList: boolean[];
+  totalItems: number;
+  pageItems: number;
 
   constructor(
     private dataService: DataService,
     public formOptionsService: FormOptionsService,
     private router: Router
-  ) {}
+  ) {
+    this.pageItems = 2;
+  }
 
   ngOnInit() {
-    this.dataService.getBugs().subscribe(
-      bugs => {
-        this.bugs = bugs;
-        this.displayCommentList = new Array<boolean>(this.bugs.length);
-      },
-      error => {
-        alert('Cannot retrieve data');
-      }
-    );
+    this.dataService.getBugs().subscribe((bugs) => {
+      this.totalItems = bugs.length;
+      this.getSortedBugs(0, this.pageItems);
+    },
+    error => {
+      alert('Cannot retrieve data');
+    });
   }
 
   public getOrderClass(key: string): string {
@@ -80,7 +82,29 @@ export class BugListComponent implements OnInit {
     this.router.navigate(['addbug']);
   }
 
-  toggleDisplay(index){
+  toggleDisplay(index) {
     this.displayCommentList[index] = !this.displayCommentList[index];
   }
+
+  onPageChanged(pageIndex: number){
+    if(this.orderBy.column === ''){
+      this.getSortedBugs(pageIndex, this.pageItems);
+    }else{
+      this.getSortedBugs(pageIndex, this.pageItems, this.orderBy);
+    }
+
+  }
+
+  private getSortedBugs(page: number, size: number, orderBy?: OrderBy){
+    this.dataService.getSortedBugs(page, size, orderBy).subscribe(
+      bugs => {
+        this.bugs = bugs;
+        this.displayCommentList = new Array<boolean>(this.bugs.length);
+      },
+      error => {
+        alert('Cannot retrieve data');
+      }
+    );
+  }
+
 }
