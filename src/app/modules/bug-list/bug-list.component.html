@@ -58,7 +58,7 @@
               <tbody>
                 <tr *ngFor="let comment of bug.comments; let i=index">
                   <td>{{i + 1}}</td>
-                  <td>{{comment.reporter}}</td>
+                  <td>{{comment.reporter | keyValueMap: formOptionsService.getReporterOptions()}}</td>
                   <td>{{comment.description}}</td>
                 </tr>
               </tbody>
