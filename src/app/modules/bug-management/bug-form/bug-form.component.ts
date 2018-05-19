@@ -60,16 +60,6 @@ export class BugFormComponent implements OnChanges {
     });
   }
 
-  // TODO: If we keep this logic, transfer this to a service in shared. If so check if it will be singleton
-  private createFormControl(value: any, validators: ValidatorFn[], enableValidators: boolean): FormControl {
-    if (enableValidators) {
-      return new FormControl(value, validators);
-    } else {
-      return new FormControl(value);
-    }
-  }
-
-  // TODO: Probably we need a better name. I need to read the method to be sure what it doing
   isUpdateNotQa() {
     if (this.bug.title === undefined) {
       return false;
