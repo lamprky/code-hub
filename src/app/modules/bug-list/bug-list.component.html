@@ -42,8 +42,8 @@
           <td>{{bug.createdAt | date:'dd/MM/yyyy'}}</td>
           <td>{{bug.status | keyValueMap: formOptionsService.getStatusOptions()}}</td>
           <td>
-            <button class="btn btn-primary" [routerLink]="['/bug', bug.id]">Edit</button>
-            <button class="btn btn-success fa fa-comment" style="font: normal normal normal 17px/1.5 FontAwesome !important;" [disabled]="bug.comments.length == 0" (click)="bug.displayComment = !bug.displayComment"></button>
+              <i class="fa fa-pencil fa-15x" [routerLink]="['/bug', bug.id]" style="width:3px;"></i>
+              <button class="btn btn-success fa fa-comment" style="font: normal normal normal 17px/1.5 FontAwesome !important;" [disabled]="bug.comments.length == 0" (click)="bug.displayComment = !bug.displayComment"></button>
           </td>
         </tr>
 

@@ -36,19 +36,24 @@ export class BugFormComponent implements OnChanges {
     this.prioritiesOptions = this.formOptionsService.getPrioritiesOptions();
     this.reporterOptions = this.formOptionsService.getReporterOptions();
     this.statusOptions = this.formOptionsService.getStatusOptions();
+
+    this.form = new FormGroup({
+      title: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      priority: new FormControl('', Validators.required),
+      reporter: new FormControl('', Validators.required),
+      status: new FormControl('')
+    });
   }
 
   ngOnChanges() {
-    this.form = new FormGroup({
-      title: new FormControl(this.bug.title, Validators.required),
-      description: new FormControl(this.bug.description, Validators.required),
-      priority: new FormControl(this.bug.priority, Validators.required),
-      reporter: new FormControl(
-        this.bug.reporter !== undefined ? +this.bug.reporter : null,
-        Validators.required
-      ),
-      status: new FormControl(this.bug.status)
-    });
+    if (this.bug.title !== undefined) {
+      this.form.controls.title.setValue(this.bug.title);
+      this.form.controls.description.setValue(this.bug.description);
+      this.form.controls.priority.setValue(this.bug.priority);
+      this.form.controls.reporter.setValue(+this.bug.reporter);
+      this.form.controls.status.setValue(this.bug.status);
+    }
 
     this.form.controls.reporter.valueChanges.subscribe((value: number) => {
       if (value === 1) {
@@ -60,16 +65,6 @@ export class BugFormComponent implements OnChanges {
     });
   }
 
-  // TODO: If we keep this logic, transfer this to a service in shared. If so check if it will be singleton
-  private createFormControl(value: any, validators: ValidatorFn[], enableValidators: boolean): FormControl {
-    if (enableValidators) {
-      return new FormControl(value, validators);
-    } else {
-      return new FormControl(value);
-    }
-  }
-
-  // TODO: Probably we need a better name. I need to read the method to be sure what it doing
   isUpdateNotQa() {
     if (this.bug.title === undefined) {
       return false;
@@ -89,7 +84,9 @@ export class BugFormComponent implements OnChanges {
   }
 
   canAddComment() {
-    return !this.isNew() && (+this.bug.reporter === 2 || +this.bug.reporter === 3);
+    return (
+      !this.isNew() && (+this.bug.reporter === 2 || +this.bug.reporter === 3)
+    );
   }
 
   canSubmitForm(form: FormGroup) {

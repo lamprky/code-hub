@@ -13,7 +13,6 @@ export class BugManagementComponent implements OnInit {
   id: string;
   bug: Bug;
 
-  // TODO: it is better to retrieve data in onInit. Constructor is only for variables initialization
   constructor(
     private dataService: DataService,
     private router: Router,
@@ -21,9 +20,11 @@ export class BugManagementComponent implements OnInit {
   ) {
     this.id = this.route.snapshot.params['id'];
     this.bug = <Bug>{};
+  }
 
+  ngOnInit() {
     if (this.id) {
-      dataService.getBug(this.id).subscribe(
+      this.dataService.getBug(this.id).subscribe(
         bug => {
           this.bug = bug;
         },
@@ -33,8 +34,6 @@ export class BugManagementComponent implements OnInit {
       );
     }
   }
-
-  ngOnInit() {}
 
   onSubmit(bug: Bug) {
     if (bug.id) {
