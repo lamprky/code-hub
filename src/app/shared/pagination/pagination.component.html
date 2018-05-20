@@ -1,13 +1,21 @@
-<nav aria-label="Page navigation example">
-  <ul class="pagination">
+<nav aria-label="Page navigation example" class="form-row">
+  <label class="form-control-label">Items per Page</label>
+  <select class="form-control form-group col-md-1" [(ngModel)]="pageItems" (change)="pageItemsChanged()">
+    <option *ngFor="let page of pageOptions" [ngValue]="page.key">
+      {{page.value}}
+    </option>
+  </select>
+  <ul class="pagination form-group col-md-6 offset-md-2">
     <li class="page-item">
       <a class="page-link" (click)="previous()">Previous</a>
     </li>
-    <li class="page-item" *ngFor="let page of totalPagesArray;let i = index">
+    <li class="page-item" *ngFor="let page of totalPagesArray;let i = index" [ngClass]="{'active': currentPage == i}">
       <a class="page-link" (click)="goToPage(i)">{{i + 1}}</a>
     </li>
     <li class="page-item">
       <a class="page-link" (click)="next()">Next</a>
     </li>
   </ul>
+
+  <!-- <label class="form-control-label">Total Items: {{totalItems}}</label> -->
 </nav>

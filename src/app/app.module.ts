@@ -10,11 +10,13 @@ import { AddBugFormsModule } from './modules/add-bug-forms/add-bug-forms.module'
 import { BugManagementComponent } from './modules/bug-management/bug-management.component';
 import { BugFormComponent } from './modules/bug-management/bug-form/bug-form.component';
 import { BugManagementModule } from './modules/bug-management/bug-management.module';
+import { PaginationDataComponent } from './modules/models/pagination-data/pagination-data.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    PaginationDataComponent,
   ],
   imports: [
     BrowserModule,

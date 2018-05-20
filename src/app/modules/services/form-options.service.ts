@@ -6,6 +6,7 @@ export class FormOptionsService {
   private statusOptions: SelectOption[] = new Array<SelectOption>();
   private reporterOptions: SelectOption[] = new Array<SelectOption>();
   private prioritiesOptions: SelectOption[] = new Array<SelectOption>();
+  private pagesOptions: SelectOption[] = new Array<SelectOption>();
 
   constructor() {
     this.prioritiesOptions.push({ value: 'Minor', key: 1 });
@@ -19,6 +20,10 @@ export class FormOptionsService {
     this.statusOptions.push({ value: 'Ready for test', key: 1 });
     this.statusOptions.push({ value: 'Done', key: 2 });
     this.statusOptions.push({ value: 'Rejected', key: 3 });
+
+    this.pagesOptions.push({ value: '5', key: 5 });
+    this.pagesOptions.push({ value: '10', key: 10 });
+    this.pagesOptions.push({ value: '20', key: 20 });
   }
 
   getPrioritiesOptions(): SelectOption[] {
@@ -31,5 +36,9 @@ export class FormOptionsService {
 
   getReporterOptions(): SelectOption[] {
     return this.reporterOptions;
+  }
+
+  getPageOptions(): SelectOption[] {
+    return this.pagesOptions;
   }
 }
