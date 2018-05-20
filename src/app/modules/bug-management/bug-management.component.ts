@@ -54,7 +54,7 @@ export class BugManagementComponent implements OnInit, BaseComponent {
     }
   }
 
-  onFormChanges() {
-    this.hasChanged = true;
+  onFormChanges(changed) {
+    this.hasChanged = changed;
   }
 }
