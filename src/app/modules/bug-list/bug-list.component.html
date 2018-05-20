@@ -36,7 +36,7 @@
     <tbody>
       <ng-container *ngFor="let bug of bugs;let i=index ">
         <tr>
-          <td>{{i + 1}}.</td>
+          <td>{{ (paginationData.currentPage * paginationData.pageItems) + i + 1}}.</td>
           <td>{{bug.title}}</td>
           <td>{{bug.description}}</td>
           <td>{{bug.priority | keyValueMap: formOptionsService.getPrioritiesOptions()}}</td>
@@ -72,7 +72,7 @@
     </tbody>
   </table>
 
-  <br-pagination [totalItems]="totalItems" [pageItems]="pageItems" (pageChanged)="onPageChanged($event)"></br-pagination>
+  <br-pagination [totalItems]="totalItems" [pageItems]="paginationData.pageItems" (pageChanged)="onPageChanged($event)"></br-pagination>
 
   <div style="margin-bottom: 50px">
   </div>

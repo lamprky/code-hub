@@ -4,6 +4,8 @@ import { SelectOption } from '../../models/selectOption.model';
 import { Bug } from '../../models/bug';
 import { DataService } from '../../services/data.service';
 import { FormOptionsService } from '../../services/form-options.service';
+import { BaseComponent } from '../guards/BaseComponent';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'br-bug-form',
@@ -11,13 +13,15 @@ import { FormOptionsService } from '../../services/form-options.service';
   styleUrls: ['./bug-form.component.scss']
 })
 export class BugFormComponent implements OnChanges, OnInit {
+  subscription: Subscription;
+  hasChanges: boolean;
   @Input() bug: Bug;
   @Output() submit = new EventEmitter<Bug>();
+  @Output() formChanges = new EventEmitter<boolean>();
 
   prioritiesOptions: SelectOption[];
   reporterOptions: SelectOption[];
   statusOptions: SelectOption[];
-
   form: FormGroup;
 
   constructor(private formOptionsService: FormOptionsService) {
@@ -25,10 +29,23 @@ export class BugFormComponent implements OnChanges, OnInit {
     this.reporterOptions = this.formOptionsService.getReporterOptions();
     this.statusOptions = this.formOptionsService.getStatusOptions();
 
+<<<<<<< HEAD
     this.buildForm();
+=======
+    this.form = new FormGroup({
+      title: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      priority: new FormControl('', Validators.required),
+      reporter: new FormControl('', Validators.required),
+      status: new FormControl('')
+    });
+
+    this.hasChanges = false;
+>>>>>>> 0a556749acfe2dfeefe0935164268185f2373804
   }
 
   ngOnInit(): void {
+    this.registerFormChanges();
     this.form.controls.reporter.valueChanges.subscribe((value: number) => {
       if (value === 1) {
         this.form.controls.status.setValidators(Validators.required);
@@ -51,14 +68,24 @@ export class BugFormComponent implements OnChanges, OnInit {
 
   ngOnChanges() {
     if (this.bug.title !== undefined) {
+      this.subscription.unsubscribe();
       this.form.controls.title.setValue(this.bug.title);
       this.form.controls.description.setValue(this.bug.description);
       this.form.controls.priority.setValue(this.bug.priority);
       this.form.controls.reporter.setValue(+this.bug.reporter);
       this.form.controls.status.setValue(this.bug.status);
+      this.registerFormChanges();
     }
   }
 
+  registerFormChanges() {
+    this.subscription = this.form.valueChanges.subscribe(val => {
+      if (!this.hasChanges) {
+        this.hasChanges = !this.hasChanges;
+        this.formChanges.emit(true);
+      }
+    });
+  }
   isUpdateNotQa() {
     if (this.bug.title === undefined) {
       return false;
@@ -105,5 +132,6 @@ export class BugFormComponent implements OnChanges, OnInit {
     });
 
     this.submit.emit(this.bug);
+    this.formChanges.emit(false);
   }
 }

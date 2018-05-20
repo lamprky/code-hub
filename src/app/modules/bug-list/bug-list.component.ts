@@ -19,21 +19,24 @@ export class BugListComponent implements OnInit {
   orderBy: OrderBy = { isAsc: true, column: '' };
   displayCommentList: boolean[];
   totalItems: number;
-  pageItems: number;
+  paginationData: PaginationData;
 
   constructor(
     private dataService: DataService,
     public formOptionsService: FormOptionsService,
     private router: Router
   ) {
-    this.pageItems = +formOptionsService.getPageOptions()[0].value;
+    this.paginationData = <PaginationData>{
+      currentPage: 0,
+      pageItems: +formOptionsService.getPageOptions()[0].value
+    };
   }
 
   ngOnInit() {
     this.dataService.getBugs().subscribe(
       bugs => {
         this.totalItems = bugs.length;
-        this.getSortedBugs(0, this.pageItems);
+        this.getSortedBugs(0, this.paginationData.pageItems);
       },
       error => {
         alert('Cannot retrieve data');
@@ -56,7 +59,7 @@ export class BugListComponent implements OnInit {
       this.orderBy = { isAsc: true, column: key };
     }
 
-    this.getSortedBugs(0, this.pageItems, this.orderBy);
+    this.getSortedBugs(0, this.paginationData.pageItems, this.orderBy);
   }
 
   gotoAddNew() {
@@ -68,7 +71,7 @@ export class BugListComponent implements OnInit {
   }
 
   onPageChanged(pd: PaginationData) {
-    this.pageItems = pd.pageItems;
+    this.paginationData = pd;
     if (this.orderBy.column === '') {
       this.getSortedBugs(pd.currentPage, pd.pageItems);
     } else {
@@ -76,10 +79,11 @@ export class BugListComponent implements OnInit {
     }
   }
 
-  onSearchClicked(searchCriteria: SearchCriteria){
-    this.dataService.searchBugs(searchCriteria, 0, this.pageItems, this.orderBy).subscribe(
+  onSearchClicked(searchCriteria: SearchCriteria) {
+    this.dataService.searchBugs(searchCriteria, 0, this.paginationData.pageItems, this.orderBy).subscribe(
       bugs => {
         this.refreshBugs(bugs);
+        this.totalItems = bugs.length;
       },
       error => {
         alert('Search: Cannot retrieve data');
@@ -98,7 +102,7 @@ export class BugListComponent implements OnInit {
     );
   }
 
-  private refreshBugs(bugs: Bug[]){
+  private refreshBugs(bugs: Bug[]) {
     this.bugs = bugs;
     this.displayCommentList = new Array<boolean>(this.bugs.length);
   }

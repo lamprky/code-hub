@@ -26,7 +26,6 @@ export class AdvancedSearchComponent implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       title: new FormControl(''),
-      description: new FormControl(''),
       priority: new FormControl(''),
       reporter: new FormControl(''),
       status: new FormControl('')
@@ -34,7 +33,7 @@ export class AdvancedSearchComponent implements OnInit {
   }
 
   disableSearch() : boolean{
-    return false;
+    return Object.values(this.form.value).findIndex((value) => value != '') === -1;
   }
 
   search(){
