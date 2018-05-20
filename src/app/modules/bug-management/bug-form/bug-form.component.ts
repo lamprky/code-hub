@@ -80,7 +80,7 @@ export class BugFormComponent implements OnChanges, OnInit {
     this.subscription = this.form.valueChanges.subscribe(val => {
       if (!this.hasChanges) {
         this.hasChanges = !this.hasChanges;
-        this.formChanges.emit();
+        this.formChanges.emit(true);
       }
     });
   }
@@ -130,5 +130,6 @@ export class BugFormComponent implements OnChanges, OnInit {
     });
 
     this.submit.emit(this.bug);
+    this.formChanges.emit(false);
   }
 }
