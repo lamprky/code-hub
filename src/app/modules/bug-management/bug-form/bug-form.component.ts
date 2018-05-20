@@ -1,17 +1,5 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  OnChanges
-} from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  ValidatorFn
-} from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { SelectOption } from '../../models/selectOption.model';
 import { Bug } from '../../models/bug';
 import { DataService } from '../../services/data.service';
@@ -37,13 +25,7 @@ export class BugFormComponent implements OnChanges, OnInit {
     this.reporterOptions = this.formOptionsService.getReporterOptions();
     this.statusOptions = this.formOptionsService.getStatusOptions();
 
-    this.form = new FormGroup({
-      title: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required),
-      priority: new FormControl('', Validators.required),
-      reporter: new FormControl('', Validators.required),
-      status: new FormControl('')
-    });
+    this.buildForm();
   }
 
   ngOnInit(): void {
@@ -54,6 +36,16 @@ export class BugFormComponent implements OnChanges, OnInit {
         this.form.controls.status.clearValidators();
       }
       this.form.controls.status.updateValueAndValidity();
+    });
+  }
+
+  buildForm() {
+    this.form = new FormGroup({
+      title: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      priority: new FormControl('', Validators.required),
+      reporter: new FormControl('', Validators.required),
+      status: new FormControl('')
     });
   }
 
