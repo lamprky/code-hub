@@ -33,7 +33,7 @@ export class AdvancedSearchComponent implements OnInit {
   }
 
   disableSearch() : boolean{
-    return false;
+    return Object.values(this.form.value).findIndex((value) => value != '') === -1;
   }
 
   search(){
