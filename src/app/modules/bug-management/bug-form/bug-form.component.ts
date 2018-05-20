@@ -17,6 +17,7 @@ import { Bug } from '../../models/bug';
 import { DataService } from '../../services/data.service';
 import { FormOptionsService } from '../../services/form-options.service';
 import { BaseComponent } from '../guards/BaseComponent';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'br-bug-form',
@@ -24,6 +25,7 @@ import { BaseComponent } from '../guards/BaseComponent';
   styleUrls: ['./bug-form.component.scss']
 })
 export class BugFormComponent implements OnChanges, OnInit {
+  subscription: Subscription;
   hasChanges: boolean;
   @Input() bug: Bug;
   @Output() submit = new EventEmitter<Bug>();
@@ -51,6 +53,7 @@ export class BugFormComponent implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
+    this.registerFormChanges();
     this.form.controls.reporter.valueChanges.subscribe((value: number) => {
       if (value === 1) {
         this.form.controls.status.setValidators(Validators.required);
@@ -63,6 +66,7 @@ export class BugFormComponent implements OnChanges, OnInit {
 
   ngOnChanges() {
     if (this.bug.title !== undefined) {
+      this.subscription.unsubscribe();
       this.form.controls.title.setValue(this.bug.title);
       this.form.controls.description.setValue(this.bug.description);
       this.form.controls.priority.setValue(this.bug.priority);
@@ -73,7 +77,7 @@ export class BugFormComponent implements OnChanges, OnInit {
   }
 
   registerFormChanges() {
-    this.form.valueChanges.subscribe(val => {
+    this.subscription = this.form.valueChanges.subscribe(val => {
       if (!this.hasChanges) {
         this.hasChanges = !this.hasChanges;
         this.formChanges.emit();
