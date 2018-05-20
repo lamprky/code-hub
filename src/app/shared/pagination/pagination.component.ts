@@ -18,6 +18,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   currentPage: number;
   pageOptions: SelectOption[];
   pd: PaginationData;
+  totalPages: number;
 
   constructor(private formOptionsService: FormOptionsService) {
     this.pageOptions = this.formOptionsService.getPageOptions();
@@ -33,9 +34,9 @@ export class PaginationComponent implements OnInit, OnChanges {
     } else {
       this.currentPage = 0;
     }
-
     if (this.totalItems) {
       this.calculateTotalPages();
+      this.totalPages = this.totalPagesArray.length - 1;
     }
   }
 
@@ -47,7 +48,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   next() {
-    if (this.currentPage < this.totalPagesArray.length) {
+    if (this.currentPage < this.totalPages) {
       this.currentPage++;
       this.onPageChanged();
     }
@@ -71,6 +72,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   private calculateTotalPages() {
+
     this.totalPagesArray = new Array<number>(
       Math.ceil(this.totalItems / this.pageItems)
     );
