@@ -28,13 +28,15 @@ export class BugListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataService.getBugs().subscribe((bugs) => {
-      this.totalItems = bugs.length;
-      this.getSortedBugs(0, this.pageItems);
-    },
-    error => {
-      alert('Cannot retrieve data');
-    });
+    this.dataService.getBugs().subscribe(
+      bugs => {
+        this.totalItems = bugs.length;
+        this.getSortedBugs(0, this.pageItems);
+      },
+      error => {
+        alert('Cannot retrieve data');
+      }
+    );
   }
 
   public getOrderClass(key: string): string {
@@ -63,16 +65,15 @@ export class BugListComponent implements OnInit {
     this.displayCommentList[index] = !this.displayCommentList[index];
   }
 
-  onPageChanged(pageIndex: number){
-    if(this.orderBy.column === ''){
+  onPageChanged(pageIndex: number) {
+    if (this.orderBy.column === '') {
       this.getSortedBugs(pageIndex, this.pageItems);
-    }else{
+    } else {
       this.getSortedBugs(pageIndex, this.pageItems, this.orderBy);
     }
-
   }
 
-  private getSortedBugs(page: number, size: number, orderBy?: OrderBy){
+  private getSortedBugs(page: number, size: number, orderBy?: OrderBy) {
     this.dataService.getSortedBugs(page, size, orderBy).subscribe(
       bugs => {
         this.bugs = bugs;
@@ -83,5 +84,4 @@ export class BugListComponent implements OnInit {
       }
     );
   }
-
 }
