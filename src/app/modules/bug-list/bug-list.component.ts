@@ -33,7 +33,7 @@ export class BugListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataService.getBugs().subscribe(
+    this.dataService.getSortedBugs(0, 1000).subscribe(
       bugs => {
         this.totalItems = bugs.length;
         this.getSortedBugs(0, this.paginationData.pageItems);
