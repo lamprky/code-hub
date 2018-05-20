@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { FormOptionsService } from '../services/form-options.service';
 import { IComment } from '../models/comment';
 import { SearchCriteria } from '../models/searchCriteria';
+import { PaginationData } from '../models/pagination-data';
 
 @Component({
   selector: 'br-bug-list',
@@ -25,17 +26,19 @@ export class BugListComponent implements OnInit {
     public formOptionsService: FormOptionsService,
     private router: Router
   ) {
-    this.pageItems = 2;
+    this.pageItems = +formOptionsService.getPageOptions()[0].value;
   }
 
   ngOnInit() {
-    this.dataService.getBugs().subscribe((bugs) => {
-      this.totalItems = bugs.length;
-      this.getSortedBugs(0, this.pageItems);
-    },
-    error => {
-      alert('Cannot retrieve data');
-    });
+    this.dataService.getBugs().subscribe(
+      bugs => {
+        this.totalItems = bugs.length;
+        this.getSortedBugs(0, this.pageItems);
+      },
+      error => {
+        alert('Cannot retrieve data');
+      }
+    );
   }
 
   public getOrderClass(key: string): string {
@@ -64,11 +67,12 @@ export class BugListComponent implements OnInit {
     this.displayCommentList[index] = !this.displayCommentList[index];
   }
 
-  onPageChanged(pageIndex: number){
-    if(this.orderBy.column === ''){
-      this.getSortedBugs(pageIndex, this.pageItems);
-    }else{
-      this.getSortedBugs(pageIndex, this.pageItems, this.orderBy);
+  onPageChanged(pd: PaginationData) {
+    this.pageItems = pd.pageItems;
+    if (this.orderBy.column === '') {
+      this.getSortedBugs(pd.currentPage, pd.pageItems);
+    } else {
+      this.getSortedBugs(pd.currentPage, pd.pageItems, this.orderBy);
     }
   }
 
@@ -83,7 +87,7 @@ export class BugListComponent implements OnInit {
     );
   }
 
-  private getSortedBugs(page: number, size: number, orderBy?: OrderBy){
+  private getSortedBugs(page: number, size: number, orderBy?: OrderBy) {
     this.dataService.getSortedBugs(page, size, orderBy).subscribe(
       bugs => {
         this.refreshBugs(bugs);

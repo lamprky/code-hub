@@ -59,7 +59,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let comment of bug.comments; let i=index">
-                  <td>{{i + 1}}</td>
+                  <td>{{i + 1}}.</td>
                   <td>{{comment.reporter | keyValueMap: formOptionsService.getReporterOptions()}}</td>
                   <td>{{comment.description}}</td>
                 </tr>
@@ -76,6 +76,4 @@
 
   <div style="margin-bottom: 50px">
   </div>
-
-
 </div>
