@@ -37,7 +37,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   next() {
-    if (this.currentPage < this.totalPagesArray.length) {
+    if (this.currentPage < this.totalPagesArray.length - 1) {
       this.currentPage++;
       this.onPageChanged();
     }

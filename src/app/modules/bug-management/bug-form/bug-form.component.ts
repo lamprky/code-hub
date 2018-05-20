@@ -22,7 +22,7 @@ import { FormOptionsService } from '../../services/form-options.service';
   templateUrl: './bug-form.component.html',
   styleUrls: ['./bug-form.component.scss']
 })
-export class BugFormComponent implements OnChanges {
+export class BugFormComponent implements OnChanges, OnInit {
   @Input() bug: Bug;
   @Output() submit = new EventEmitter<Bug>();
 
@@ -46,15 +46,7 @@ export class BugFormComponent implements OnChanges {
     });
   }
 
-  ngOnChanges() {
-    if (this.bug.title !== undefined) {
-      this.form.controls.title.setValue(this.bug.title);
-      this.form.controls.description.setValue(this.bug.description);
-      this.form.controls.priority.setValue(this.bug.priority);
-      this.form.controls.reporter.setValue(+this.bug.reporter);
-      this.form.controls.status.setValue(this.bug.status);
-    }
-
+  ngOnInit(): void {
     this.form.controls.reporter.valueChanges.subscribe((value: number) => {
       if (value === 1) {
         this.form.controls.status.setValidators(Validators.required);
@@ -63,6 +55,16 @@ export class BugFormComponent implements OnChanges {
       }
       this.form.controls.status.updateValueAndValidity();
     });
+  }
+
+  ngOnChanges() {
+    if (this.bug.title !== undefined) {
+      this.form.controls.title.setValue(this.bug.title);
+      this.form.controls.description.setValue(this.bug.description);
+      this.form.controls.priority.setValue(this.bug.priority);
+      this.form.controls.reporter.setValue(+this.bug.reporter);
+      this.form.controls.status.setValue(this.bug.status);
+    }
   }
 
   isUpdateNotQa() {
