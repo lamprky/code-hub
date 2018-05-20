@@ -26,7 +26,6 @@ export class AdvancedSearchComponent implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       title: new FormControl(''),
-      description: new FormControl(''),
       priority: new FormControl(''),
       reporter: new FormControl(''),
       status: new FormControl('')

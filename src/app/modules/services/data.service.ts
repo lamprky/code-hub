@@ -46,7 +46,7 @@ export class DataService {
     let url = environment.endpoint + '/bugs?';
     url += 'page=' + page + '&size=' + size;
 
-    if(orderBy.column !== ''){
+    if(orderBy && orderBy.column !== ''){
       const order = orderBy.isAsc ? 'asc' : 'desc';
       url += '&sort=' + orderBy.column + ',' + order;
     }
