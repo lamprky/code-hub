@@ -102,7 +102,7 @@ export class BugListComponent implements OnInit {
     );
   }
 
-  private refreshBugs(bugs: Bug[]){
+  private refreshBugs(bugs: Bug[]) {
     this.bugs = bugs;
     this.displayCommentList = new Array<boolean>(this.bugs.length);
   }

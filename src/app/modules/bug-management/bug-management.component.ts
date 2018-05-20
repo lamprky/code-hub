@@ -3,15 +3,17 @@ import { DataService } from '../services/data.service';
 import { FormOptionsService } from '../services/form-options.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Bug } from '../models/bug';
+import { BaseComponent } from './guards/BaseComponent';
 
 @Component({
   selector: 'br-bug-management',
   templateUrl: './bug-management.component.html',
   styleUrls: ['./bug-management.component.scss']
 })
-export class BugManagementComponent implements OnInit {
-  id: string;
+export class BugManagementComponent implements OnInit, BaseComponent {
+    id: string;
   bug: Bug;
+  hasChanged: boolean;
 
   constructor(
     private dataService: DataService,
@@ -20,6 +22,11 @@ export class BugManagementComponent implements OnInit {
   ) {
     this.id = this.route.snapshot.params['id'];
     this.bug = <Bug>{};
+    this.hasChanged = false;
+  }
+
+  canDeactivate = () => {
+    return !this.hasChanged;
   }
 
   ngOnInit() {
@@ -45,5 +52,9 @@ export class BugManagementComponent implements OnInit {
         this.router.navigate(['']);
       });
     }
+  }
+
+  onFormChanges() {
+    this.hasChanged = true;
   }
 }

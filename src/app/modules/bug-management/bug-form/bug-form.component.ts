@@ -16,6 +16,7 @@ import { SelectOption } from '../../models/selectOption.model';
 import { Bug } from '../../models/bug';
 import { DataService } from '../../services/data.service';
 import { FormOptionsService } from '../../services/form-options.service';
+import { BaseComponent } from '../guards/BaseComponent';
 
 @Component({
   selector: 'br-bug-form',
@@ -23,13 +24,14 @@ import { FormOptionsService } from '../../services/form-options.service';
   styleUrls: ['./bug-form.component.scss']
 })
 export class BugFormComponent implements OnChanges, OnInit {
+  hasChanges: boolean;
   @Input() bug: Bug;
   @Output() submit = new EventEmitter<Bug>();
+  @Output() formChanges = new EventEmitter<boolean>();
 
   prioritiesOptions: SelectOption[];
   reporterOptions: SelectOption[];
   statusOptions: SelectOption[];
-
   form: FormGroup;
 
   constructor(private formOptionsService: FormOptionsService) {
@@ -44,6 +46,8 @@ export class BugFormComponent implements OnChanges, OnInit {
       reporter: new FormControl('', Validators.required),
       status: new FormControl('')
     });
+
+    this.hasChanges = false;
   }
 
   ngOnInit(): void {
@@ -64,9 +68,18 @@ export class BugFormComponent implements OnChanges, OnInit {
       this.form.controls.priority.setValue(this.bug.priority);
       this.form.controls.reporter.setValue(+this.bug.reporter);
       this.form.controls.status.setValue(this.bug.status);
+      this.registerFormChanges();
     }
   }
 
+  registerFormChanges() {
+    this.form.valueChanges.subscribe(val => {
+      if (!this.hasChanges) {
+        this.hasChanges = !this.hasChanges;
+        this.formChanges.emit();
+      }
+    });
+  }
   isUpdateNotQa() {
     if (this.bug.title === undefined) {
       return false;
