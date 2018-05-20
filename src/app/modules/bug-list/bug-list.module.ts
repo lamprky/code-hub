@@ -8,6 +8,7 @@ import { FormOptionsService } from '../services/form-options.service';
 import { CoreModule } from '../../core/core.module';
 import { KeyValueMapPipe } from '../pipes/key-value-map.pipe';
 import { SharedModule } from '../../shared/shared.module';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
 const routes: Routes = [
   {path: 'bug-list', component: BugListComponent}
@@ -22,7 +23,7 @@ const routes: Routes = [
   exports: [
     RouterModule
   ],
-  declarations: [BugListComponent, KeyValueMapPipe],
+  declarations: [BugListComponent, KeyValueMapPipe, AdvancedSearchComponent],
   providers: [DataService, FormOptionsService]
 })
 export class BugListModule { }

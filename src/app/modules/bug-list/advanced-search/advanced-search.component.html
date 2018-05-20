@@ -1,0 +1,58 @@
+<form [formGroup]="form" class="form" (ngSubmit)="search()" [class.was-validated]="form.invalid && form.dirty">
+
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label class="form-control-label">Title</label>
+      <input formControlName="title" class="form-control" type="text" name="title">
+    </div>
+
+    <div class="form-group col-sm-6">
+      <label class="form-control-label">Description</label>
+      <input formControlName="description" class="form-control" type="text" name="description">
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label class="form-control-label">Priority</label>
+      <br/>
+      <select formControlName="priority" class="form-control" name="priority">
+        <option [ngValue]="null">Select</option>
+        <option *ngFor="let priority of prioritiesOptions" [ngValue]="priority.key">
+          {{priority.value}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-sm-6">
+      <label class="form-control-label">Reporter</label>
+      <br/>
+      <select formControlName="reporter" class="form-control" name="reporter">
+        <option [ngValue]="null">Select</option>
+        <option *ngFor="let reporter of reporterOptions" [ngValue]="reporter.key">
+          {{reporter.value}}
+        </option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label class="form-control-label">Status</label>
+      <br/>
+      <div class="form-check" *ngFor="let status of statusOptions">
+        <label class="form-check-label">
+          <input formControlName="status" type="radio" class="form-check-input" name="status" id="{{status.key}}" value="{{status.key}}"> {{status.value}}
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6" style="margin-top: 50px">
+      <div class="float-right">
+          <button class="btn btn-primary btn-block" type="submit" [disabled]="disableSearch()">Search</button>
+      </div>
+    </div>
+  </div>
+</form>

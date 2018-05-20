@@ -6,6 +6,7 @@ import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormOptionsService } from '../services/form-options.service';
 import { IComment } from '../models/comment';
+import { SearchCriteria } from '../models/searchCriteria';
 
 @Component({
   selector: 'br-bug-list',
@@ -69,19 +70,32 @@ export class BugListComponent implements OnInit {
     }else{
       this.getSortedBugs(pageIndex, this.pageItems, this.orderBy);
     }
+  }
 
+  onSearchClicked(searchCriteria: SearchCriteria){
+    this.dataService.searchBugs(searchCriteria, 0, this.pageItems, this.orderBy).subscribe(
+      bugs => {
+        this.refreshBugs(bugs);
+      },
+      error => {
+        alert('Search: Cannot retrieve data');
+      }
+    );
   }
 
   private getSortedBugs(page: number, size: number, orderBy?: OrderBy){
     this.dataService.getSortedBugs(page, size, orderBy).subscribe(
       bugs => {
-        this.bugs = bugs;
-        this.displayCommentList = new Array<boolean>(this.bugs.length);
+        this.refreshBugs(bugs);
       },
       error => {
-        alert('Cannot retrieve data');
+        alert('SortedBugs: Cannot retrieve data');
       }
     );
   }
 
+  private refreshBugs(bugs: Bug[]){
+    this.bugs = bugs;
+    this.displayCommentList = new Array<boolean>(this.bugs.length);
+  }
 }
