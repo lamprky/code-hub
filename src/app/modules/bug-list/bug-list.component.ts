@@ -83,6 +83,7 @@ export class BugListComponent implements OnInit {
     this.dataService.searchBugs(searchCriteria, 0, this.paginationData.pageItems, this.orderBy).subscribe(
       bugs => {
         this.refreshBugs(bugs);
+        this.totalItems = bugs.length;
       },
       error => {
         alert('Search: Cannot retrieve data');
@@ -94,7 +95,6 @@ export class BugListComponent implements OnInit {
     this.dataService.getSortedBugs(page, size, orderBy).subscribe(
       bugs => {
         this.refreshBugs(bugs);
-        this.totalItems = bugs.length;
       },
       error => {
         alert('SortedBugs: Cannot retrieve data');
