@@ -28,7 +28,7 @@ export class AddBugTemplateComponent implements OnInit {
   }
 
   isStatusReq(): boolean {
-    if (this.bug.reporter === '1') {
+    if (this.bug.reporter === 1) {
       return true;
     } else {
       return false;

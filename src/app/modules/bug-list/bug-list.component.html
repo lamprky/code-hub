@@ -1,7 +1,11 @@
 <div class="container">
-  <a class="btn btn-primary" [routerLink]="['/addBugTemplate']">Add Bug Template</a>
+  <!-- <a class="btn btn-primary" [routerLink]="['/addBugTemplate']">Add Bug Template</a>
   <a class="btn btn-primary" [routerLink]="['/addBugReactive']">Add Bug Reactive</a>
-  <a class="btn btn-primary" [routerLink]="['/bug']">Add Bug</a>
+  <a class="btn btn-primary" [routerLink]="['/bug']">Add Bug</a> -->
+
+  <h3>Bug List</h3>
+
+  <br-advanced-search (searchClicked)="onSearchClicked($event)"></br-advanced-search>
 
   <table class="table">
     <thead>
@@ -30,16 +34,46 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let bug of bugs;let i=index ">
-        <td>{{i + 1}}.</td>
-        <td>{{bug.title}}</td>
-        <td>{{bug.description}}</td>
-        <td>{{bug.priority}}</td>
-        <td>{{bug.reporter}}</td>
-        <td>{{bug.createdAt | date:'dd/MM/yyyy'}}</td>
-        <td>{{bug.status}}</td>
-        <td><button class="btn btn-primary" [routerLink]="['/bug', bug.id]">Edit</button></td>
-      </tr>
+      <ng-container *ngFor="let bug of bugs;let i=index ">
+        <tr>
+          <td>{{ (paginationData.currentPage * paginationData.pageItems) + i + 1}}.</td>
+          <td>{{bug.title}}</td>
+          <td>{{bug.description}}</td>
+          <td>{{bug.priority | keyValueMap: formOptionsService.getPrioritiesOptions()}}</td>
+          <td>{{bug.reporter | keyValueMap: formOptionsService.getReporterOptions()}}</td>
+          <td>{{bug.createdAt | date:'dd/MM/yyyy'}}</td>
+          <td>{{bug.status | keyValueMap: formOptionsService.getStatusOptions()}}</td>
+          <td>
+              <button class="btn btn-primary fa fa-pencil" [routerLink]="['/bug', bug.id]"></button>
+              <button class="btn btn-success fa fa-comment" [disabled]="bug.comments.length == 0" (click)="toggleDisplay(i)"></button>
+          </td>
+        </tr>
+
+        <tr *ngIf="displayCommentList[i]">
+          <td colspan="8">
+            <table style="width: 97%;border: 2px solid lightgray">
+              <thead style=" line-height: 0.5; background-color: lightgray ">
+                <th>Comment</th>
+                <th>Reporter</th>
+                <th>Description</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let comment of bug.comments; let i=index">
+                  <td>{{i + 1}}.</td>
+                  <td>{{comment.reporter | keyValueMap: formOptionsService.getReporterOptions()}}</td>
+                  <td>{{comment.description}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+
+      </ng-container>
     </tbody>
   </table>
+
+  <br-pagination [totalItems]="totalItems" [pageItems]="paginationData.pageItems" (pageChanged)="onPageChanged($event)"></br-pagination>
+
+  <div style="margin-bottom: 50px">
+  </div>
 </div>

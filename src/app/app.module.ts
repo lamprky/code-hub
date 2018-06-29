@@ -11,7 +11,6 @@ import { BugManagementComponent } from './modules/bug-management/bug-management.
 import { BugFormComponent } from './modules/bug-management/bug-form/bug-form.component';
 import { BugManagementModule } from './modules/bug-management/bug-management.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,
